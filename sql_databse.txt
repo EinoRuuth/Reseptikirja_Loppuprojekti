@@ -1,0 +1,76 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+-- Database: `keittokirja`
+--
+CREATE DATABASE IF NOT EXISTS `keittokirja` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `keittokirja`;
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `käyttäjä`
+--
+
+CREATE TABLE `käyttäjä` (
+  `tunnus` varchar(20) NOT NULL,
+  `salasana` text NOT NULL,
+  `käyttäjänimi` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `palaute`
+--
+
+CREATE TABLE `palaute` (
+  `otsikko` varchar(500) NOT NULL,
+  `kuvaus` varchar(3000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Rakenne taululle `resepti`
+--
+
+CREATE TABLE `resepti` (
+  `nimi` varchar(100) NOT NULL,
+  `reseptiid` int(10) NOT NULL,
+  `kuva` varchar(100) NOT NULL,
+  `ruokalaji` varchar(40) NOT NULL,
+  `ainekset` text NOT NULL,
+  `valmistuohje` text NOT NULL,
+  `kirjoittaja` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `käyttäjä`
+--
+ALTER TABLE `käyttäjä`
+  ADD PRIMARY KEY (`tunnus`(6));
+
+--
+-- Indexes for table `resepti`
+--
+ALTER TABLE `resepti`
+  ADD PRIMARY KEY (`reseptiid`),
+  ADD UNIQUE KEY `nimi` (`nimi`,`kuva`,`ruokalaji`,`ainekset`,`valmistuohje`,`kirjoittaja`) USING HASH;
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `resepti`
+--
+ALTER TABLE `resepti`
+  MODIFY `reseptiid` int(10) NOT NULL AUTO_INCREMENT;
+COMMIT;
