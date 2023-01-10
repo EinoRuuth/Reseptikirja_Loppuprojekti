@@ -1,3 +1,8 @@
+Tässä tekstitiedostossa on kaikki tarvittavat sql lauseet joilla pysty tekemään tietokanna jossa on oikeat nimet. On mahdollista että sinun pitää muuttaa yhteys dbConfig.php tiedostossa sinun omiisi.
+
+
+
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
