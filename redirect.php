@@ -80,9 +80,9 @@
             if ($_SESSION["id"] == "4704413142") { ?>
             <a href="/php/palautteet.php">Lue palateet</a>
         <?php } } ?>
-    <?php if (isset($_SESSION["käyttäjänimi"])) { $knimi = $_SESSION["käyttäjänimi"] ?>
+    <?php if (isset($_SESSION["käyttäjänimi"])) { $username = $_SESSION["käyttäjänimi"] ?>
     <div class="dropdown">
-        <button class="dropbtn"><?php echo $knimi; ?>
+        <button class="dropbtn"><?php echo $username; ?>
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
@@ -116,13 +116,13 @@
     }
     if (isset($_SESSION["poistaid"])) {
         $id = $_SESSION["poistaid"];
-        $poistasql = "DELETE FROM resepti WHERE reseptiid=$id";
-        if ($yhteys->query($poistasql) === TRUE) {
+        $removesql = "DELETE FROM resepti WHERE reseptiid=$id";
+        if ($conn->query($removesql) === TRUE) {
             echo "Resepti on poistettu";
         } else {
-            echo "Virhe: " . $yhteys->error;
+            echo "Virhe: " . $conn->error;
         }
-        $yhteys->close();
+        $conn->close();
     }
     if (isset($_GET["page"])) {
         $link = $_GET["page"];

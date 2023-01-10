@@ -81,34 +81,34 @@
     <?php
         session_start();
         include 'dbConfig.php';
-        $kaikki = array();
+        $all = array();
         if (isset($_POST["reseptit"])) {
             if (isset($_POST["reseptiname"])) {
-                $nimi = $_POST["reseptiname"];
-                $hakusql = "SELECT * FROM resepti WHERE nimi LIKE '%$nimi%'";
+                $name = $_POST["reseptiname"];
+                $sql = "SELECT * FROM resepti WHERE nimi LIKE '%$nimi%'";
             }
             if (isset($_POST["ainesnimi"])) {
-                $aines = $_POST["ainesnimi"];
-                $hakusql = "SELECT * FROM resepti WHERE ainekset LIKE '%$aines%'";
+                $ingredient = $_POST["ainesnimi"];
+                $sql = "SELECT * FROM resepti WHERE ainekset LIKE '%$aines%'";
             }
             if (isset($_POST["lajiname"])) {
-                $laji = $_POST["lajiname"];
-                $hakusql = "SELECT * FROM resepti WHERE ruokalaji LIKE '%$laji%'";
+                $course = $_POST["lajiname"];
+                $sql = "SELECT * FROM resepti WHERE ruokalaji LIKE '%$laji%'";
             }
-		    $tulokset = $yhteys->query($hakusql);
-		    if ($tulokset->num_rows>0) {
-                while($rivi=$tulokset->fetch_assoc()) {
-                    $hakunimi = $rivi["nimi"];
-                    $kirjoittaja = $rivi["kirjoittaja"];
-                    $array = $hakunimi . ' ' . $kirjoittaja;
-                    $kaikki[] = $array;
+		    $results = $conn->query($sql);
+		    if ($results->num_rows>0) {
+                while($row=$results->fetch_assoc()) {
+                    $searchname = $row["nimi"];
+                    $creator = $row["kirjoittaja"];
+                    $array = $searchname . ' ' . $creator;
+                    $all[] = $array;
             }
-            foreach ($kaikki as $value) {
+            foreach ($all as $value) {
             }
-            $montako = count($kaikki);
+            $howmany = count($all);
 
             } else {
-                $montako = 0;
+                $howmany = 0;
             }
         }
     ?>
@@ -118,9 +118,9 @@
     <?php if (isset($_SESSION["käyttäjänimi"])) { ?>
         <a href="/php/kirjoitaresepti.php">Kirjoita resepti</a>
     <?php } ?>
-    <?php if (isset($_SESSION["käyttäjänimi"])) { $knimi = $_SESSION["käyttäjänimi"] ?>
+    <?php if (isset($_SESSION["käyttäjänimi"])) { $username = $_SESSION["käyttäjänimi"] ?>
     <div class="dropdown">
-        <button class="dropbtn"><?php echo $knimi; ?>
+        <button class="dropbtn"><?php echo $username; ?>
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
@@ -170,13 +170,13 @@
     
     </form>
         <div class="homma">
-        <?php $numero = 1; 
+        <?php $number = 1; 
         if (isset($_POST["reseptit"])){
-        for ($x = 0; $x < $montako; $x++) {
-            $Paikka = $kaikki[$montako-$numero];
-            $palaset = $Paikka; $palasina = explode(" ", $palaset);
+        for ($x = 0; $x < $howmany; $x++) {
+            $spot = $all[$howmany-$number];
+            $pieces = $spot; $inpieces = explode(" ", $pieces);
         ?>
-        <a href="/php/resepti.php?resepti=<?=$palasina[0]?>&tekija=<?=$palasina[1]?>"><?php echo $palasina[0]; $numero = $numero + 1;?></a>
+        <a href="/php/resepti.php?resepti=<?=$inpieces[0]?>&tekija=<?=$inpieces[1]?>"><?php echo $inpieces[0]; $number = $number + 1;?></a>
         <?php }
         }?>
         </div>

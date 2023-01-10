@@ -90,9 +90,9 @@
             if ($_SESSION["id"] == "4704413142") { ?>
             <a class="active" href="/php/palautteet.php">Lue palateet</a>
         <?php } } ?>
-    <?php if (isset($_SESSION["käyttäjänimi"])) { $knimi = $_SESSION["käyttäjänimi"] ?>
+    <?php if (isset($_SESSION["käyttäjänimi"])) { $username = $_SESSION["käyttäjänimi"] ?>
     <div class="dropdown">
-        <button class="dropbtn"><?php echo $knimi; ?>
+        <button class="dropbtn"><?php echo $username; ?>
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
@@ -126,26 +126,26 @@
             exit();
         }
         }
-    $hakusql = "SELECT * FROM palaute";
-    $tulokset = $yhteys->query($hakusql);
-    if ($tulokset->num_rows>0) {
-        while($rivi=$tulokset->fetch_assoc()) {
-            $otsikko = $rivi["otsikko"];
-            $kuvaus = $rivi["kuvaus"];
-            $array = $otsikko . '$' . $kuvaus;
-                    $kaikki[] = $array;
+    $sql = "SELECT * FROM palaute";
+    $result = $conn->query($sql);
+    if ($results->num_rows>0) {
+        while($row=$results->fetch_assoc()) {
+            $header = $row["header"];
+            $desc = $row["desc"];
+            $array = $header . '$' . $desc;
+                    $all[] = $array;
         }
-        $montako = count($kaikki);
+        $howmany = count($all);
     } else {
         echo "ei löydy";
     }
     ?>
     <div class="homma">
-    <?php $numero = 1; 
-        for ($x = 0; $x < $montako; $x++) {
-            $Paikka = $kaikki[$montako-$numero];
+    <?php $number = 1; 
+        for ($x = 0; $x < $howmany; $x++) {
+            $spot = $all[$howmany-$number];
         ?>
-        <p><?php $palaset = $Paikka; $palasina = explode("$", $palaset); echo $palasina[0]; echo "<br>";echo "<br>"; echo $palasina[1]; $numero = $numero + 1;?></p>
+        <p><?php $pieces = $spot; $inpieces = explode("$", $pieces); echo $inpieces[0]; echo "<br>";echo "<br>"; echo $inpieces[1]; $number = $number + 1;?></p>
         <?php }?>
     </div>
 </body>

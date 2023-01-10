@@ -1,14 +1,14 @@
 <?php
-$palvelin = "localhost";
-$kayttaja = "root";
-$salasana = "";
-$tietokanta = "keittokirja";
+$server = "localhost";
+$user = "root";
+$password = "";
+$database = "keittokirja";
 
     
-$yhteys = new mysqli($palvelin, $kayttaja, $salasana, $tietokanta);
+$yhteys = new mysqli($server, $user, $password, $databse);
     
-if ($yhteys->connect_error) {
-    die("Yhteyden muodostaminen epäonnistui: " .$yhteys->connect_error);
+if ($conn->connect_error) {
+    die("Yhteyden muodostaminen epäonnistui: " .$conn->connect_error);
 }
-$yhteys->set_charset("utf8");
+$conn->set_charset("utf8");
 ?>

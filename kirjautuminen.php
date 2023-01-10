@@ -71,16 +71,16 @@
         </div>
     <?php
     if (isset($_POST["nimi"])) {
-        $käyttäjä = $_POST["nimi"];
-        $salasana = $_POST["salasana"];
-        $hakusql = "SELECT * FROM käyttäjä WHERE käyttäjänimi LIKE '$käyttäjä' AND salasana LIKE '$salasana'";
-		$tulokset = $yhteys->query($hakusql);
-		if ($tulokset->num_rows>0) {
+        $username = $_POST["nimi"];
+        $password = $_POST["salasana"];
+        $sql = "SELECT * FROM käyttäjä WHERE käyttäjänimi LIKE '$username' AND salasana LIKE '$password'";
+		$result = $conn->query($sql);
+		if ($result->num_rows>0) {
 			echo "Käyttäjä löytyy";
-            while($rivi=$tulokset->fetch_assoc()) {
-                $id = $rivi["tunnus"];
+            while($row=$result->fetch_assoc()) {
+                $id = $row["tunnus"];
             }
-            $_SESSION["käyttäjänimi"] = $käyttäjä;
+            $_SESSION["käyttäjänimi"] = $username;
             $_SESSION["id"] = $id;
             header("Location: /php/redirect.php");
             exit();
@@ -89,6 +89,6 @@
         }
     }
 ?>
-<?php $yhteys->close(); ?>
+<?php $conn->close(); ?>
 </body>
 </html>

@@ -4,17 +4,17 @@
     <?php
     session_start();
     include 'dbConfig.php';
-    $halutturesepti = $_GET['resepti'];
-    $haluttutekijä = $_GET['tekija'];
-    $hakusql = "SELECT * FROM resepti WHERE nimi LIKE '$halutturesepti' AND kirjoittaja LIKE '$haluttutekijä'";
-		$tulokset = $yhteys->query($hakusql);
-		if ($tulokset->num_rows>0) {
-            while($rivi=$tulokset->fetch_assoc()) {
-                $id = $rivi["reseptiid"];
-                $imageURL = $rivi["kuva"];
-                $ruokalaji = $rivi["ruokalaji"];
-                $ainekset = $rivi["ainekset"];
-                $valmistusohje = $rivi["valmistuohje"];
+    $wantedrecipe = $_GET['resepti'];
+    $wantedcreator = $_GET['tekija'];
+    $sql = "SELECT * FROM resepti WHERE nimi LIKE '$wantedrecipe' AND kirjoittaja LIKE '$wantedcreator'";
+		$results = $conn->query($sql);
+		if ($results->num_rows>0) {
+            while($row=$results->fetch_assoc()) {
+                $id = $row["reseptiid"];
+                $imageURL = $row["kuva"];
+                $course = $row["ruokalaji"];
+                $ingredients = $row["ainekset"];
+                $recipe = $row["valmistuohje"];
             } }
     ?>
     <style>
@@ -123,9 +123,9 @@
     <?php if (isset($_SESSION["käyttäjänimi"])) { ?>
         <a href="/php/kirjoitaresepti.php">Kirjoita resepti</a>
     <?php } ?>
-    <?php if (isset($_SESSION["käyttäjänimi"])) { $knimi = $_SESSION["käyttäjänimi"] ?>
+    <?php if (isset($_SESSION["käyttäjänimi"])) { $username = $_SESSION["käyttäjänimi"] ?>
     <div class="dropdown">
-        <button class="dropbtn"><?php echo $knimi; ?>
+        <button class="dropbtn"><?php echo $username; ?>
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
@@ -142,17 +142,17 @@
         <a href="/php/kirjautuminen.php">Kirjaudu sisään</a>
         <?php } ?>
 </div>
-    <h1><?php echo $halutturesepti; ?></h1>
+    <h1><?php echo $wantedrecipe; ?></h1>
     <div class="aineet">
         <p>ainekset</p>
         <?php
-            echo $ainekset;
+            echo $ingredients;
         ?>
     </div>
     <div class="ohje">
         <p>valmistusohje</p>
         <?php
-            echo $valmistusohje;
+            echo $recipe;
         ?>
     </div>
     <?php if ($_SESSION["id"] == "4704413142") { ?>

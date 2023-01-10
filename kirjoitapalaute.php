@@ -98,9 +98,9 @@
     <?php if (isset($_SESSION["käyttäjänimi"])) { ?>
         <a href="?page=kirjoita">Kirjoita resepti</a>
     <?php } ?>
-    <?php if (isset($_SESSION["käyttäjänimi"])) { $knimi = $_SESSION["käyttäjänimi"] ?>
+    <?php if (isset($_SESSION["käyttäjänimi"])) { $username = $_SESSION["käyttäjänimi"] ?>
     <div class="dropdown">
-        <button class="dropbtn"><?php echo $knimi; ?>
+        <button class="dropbtn"><?php echo $username; ?>
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
@@ -132,16 +132,16 @@
 </div>
 <?php
     if (isset($_POST["otsikko"])) {
-        $otsikko = str_replace("'", "''", $_POST["otsikko"]);
-        $kuvaus = str_replace("'", "''", $_POST["kuvaus"]);
+        $header = str_replace("'", "''", $_POST["otsikko"]);
+        $desc = str_replace("'", "''", $_POST["kuvaus"]);
 
-        $lisayssql = "INSERT INTO palaute VALUES ('$otsikko', '$kuvaus')";
-		$tulos = $yhteys->query($lisayssql);
-        if ($tulos ===TRUE) {
+        $addsql = "INSERT INTO palaute VALUES ('$header', '$desc')";
+		$result = $conn->query($addsql);
+        if ($result ===TRUE) {
             header("Location: /php/etusivu.php");
             exit();
 		} else {
-			echo "Virhe: ". $lisayssql. "<br>". $yhteys->error;
+			echo "Virhe: ". $addsql. "<br>". $conn->error;
 		}
     }
     if (isset($_GET["page"])) {
@@ -153,5 +153,6 @@
     }
     }
 ?>
+<?php $conn->close(); ?>
 </body>
 </html>

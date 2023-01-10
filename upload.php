@@ -3,11 +3,11 @@ include 'dbConfig.php';
 session_start();
 $statusMsg = '';
 if (isset($_POST["valmis"])) {
-    $reseptinnimi = $_POST["reseptinimipost"];
-    $ainekset = $_POST["ainekset"];
-    $valmistusohje = $_POST["ohjeet"];
-    $kirjoittaja = $_SESSION["id"];
-    $ruokalaji = $_POST["ruokalaji"];
+    $recipename = $_POST["reseptinimipost"];
+    $ingredients = $_POST["ainekset"];
+    $recipe = $_POST["ohjeet"];
+    $creator = $_SESSION["id"];
+    $course = $_POST["ruokalaji"];
 }
 
 
@@ -24,7 +24,7 @@ if(isset($_POST["valmis"]) && !empty($_FILES["file"]["name"])){
         // Upload file to server
         if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
             // Insert image file name into database
-            $lisays = "INSERT INTO resepti (nimi, kuva, ruokalaji, ainekset, valmistuohje, kirjoittaja) VALUES ('$reseptinnimi', '$fileName', '$ruokalaji', '$ainekset', '$valmistusohje', '$kirjoittaja')";
+            $lisays = "INSERT INTO resepti (nimi, kuva, ruokalaji, ainekset, valmistuohje, kirjoittaja) VALUES ('$recipename', '$fileName', '$course', '$ingredients', '$recipe', '$creator')";
             $insert = $yhteys->query($lisays);
             if($insert){
                 $statusMsg = "The file ".$fileName. " has been uploaded successfully.";

@@ -64,19 +64,19 @@
     </form>
     <?php
     if (isset($_POST["reknimi"])){
-        $käyttäjä = $_POST["reknimi"];
-        $salasana = $_POST["salasana"];
-        $tunnus = rand(1000000000, 9999999999);
-        $lisayssql = "INSERT INTO käyttäjä  VALUES ('$tunnus', '$salasana', '$käyttäjä')";
-		$tulos = $yhteys->query($lisayssql);
+        $user = $_POST["reknimi"];
+        $password = $_POST["salasana"];
+        $id = rand(1000000000, 9999999999);
+        $addsql = "INSERT INTO käyttäjä  VALUES ('$id', '$paddword', '$user')";
+		$result = $conn->query($addsql);
         if ($tulos ===TRUE) {
 			echo "Tuote lisätty";
-            $_SESSION["käyttäjänimi"] = $käyttäjä;
-            $_SESSION["salasana"] = $salasana;
+            $_SESSION["käyttäjänimi"] = $user;
+            $_SESSION["salasana"] = $password;
             header("Location: /php/redirect.php");
             exit();
 		} else {
-			echo "Virhe: ". $lisayssql. "<br>". $yhteys->error;
+			echo "Virhe: ". $addsql. "<br>". $conn->error;
 		}
     }
     ?>
@@ -88,7 +88,7 @@
         </form>
     </div>
     <?php
-    $yhteys->close();
+    $conn->close();
 ?>
 </body>
 </html>
